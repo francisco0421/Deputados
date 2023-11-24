@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deputados</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="lista"></div>
+    <script>
+        fetch("https://dadosabertos.camara.leg.br/api/v2/deputados?ordem=ASC&ordenarPor=nome")
+        .then(function(response) {
+            return response.json()
+        })
+        .then(function(data) {
+            console.log(data)
+            let lista = document.getElementById("lista")
+
+            data.dados.forEach(function(deputado){
+                const deputadoImg = document.createElement("img")
+                deputadoImg.src = deputado.urlFoto
+                lista.appendChild(deputadoImg)
+
+
+                const deputadoDiv = document.createElement("div")
+                deputadoDiv.innerHTML = `<p> ${deputado.nome} | ${deputado.siglaPartido} | ${deputado.email} | ${deputado.siglaUf}</p>`
+                lista.appendChild(deputadoDiv)
+            })
+        })
+    </script>
+</body>
+</html>
